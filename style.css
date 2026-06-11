@@ -1237,3 +1237,197 @@ body {
   /* Footer columnas apiladas */
   .footer-top .col-lg-3 { flex: 0 0 100%; max-width: 100%; }
 }
+
+/* ══════════════════════════════════════════════════════
+   BENEFICIOS
+══════════════════════════════════════════════════════ */
+.beneficios-section { background: var(--white); }
+
+.benefit-card {
+  background: var(--white);
+  border: 1px solid var(--gray-mid);
+  border-radius: var(--radius);
+  padding: 2rem 1.75rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+}
+.benefit-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: var(--transition);
+  border-radius: var(--radius) var(--radius) 0 0;
+}
+.benefit-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-md);
+  border-color: rgba(21,155,168,.25);
+}
+.benefit-card:hover::before { transform: scaleX(1); }
+
+.benefit-card-featured {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+  border-color: transparent;
+  color: var(--white);
+}
+.benefit-card-featured::before {
+  background: linear-gradient(90deg, var(--teal-light), var(--teal));
+}
+.benefit-card-featured .benefit-title { color: var(--white); }
+.benefit-card-featured .benefit-list li { color: rgba(255,255,255,.82); }
+.benefit-card-featured .benefit-list li i { color: var(--teal-light); }
+
+.benefit-icon-wrap {
+  width: 56px; height: 56px;
+  background: var(--gray-light);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  transition: var(--transition);
+  flex-shrink: 0;
+}
+.benefit-card-featured .benefit-icon-wrap {
+  background: rgba(255,255,255,.12);
+}
+.benefit-card:not(.benefit-card-featured):hover .benefit-icon-wrap {
+  background: var(--teal);
+}
+
+.benefit-emoji { font-size: 1.6rem; line-height: 1; }
+
+.benefit-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin: 0;
+  line-height: 1.35;
+}
+
+.benefit-list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: .55rem;
+  flex: 1;
+}
+.benefit-list li {
+  display: flex; align-items: flex-start; gap: .55rem;
+  font-size: .86rem;
+  color: var(--gray-text);
+  line-height: 1.5;
+}
+.benefit-list li i {
+  color: var(--teal);
+  font-size: .9rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Responsive */
+@media (max-width: 767px) {
+  .beneficios-section .col-md-6 { flex: 0 0 100%; max-width: 100%; }
+}
+
+/* ══════════════════════════════════════════════════════
+   ALIANZAS, CONVENIOS & CLIENTES
+══════════════════════════════════════════════════════ */
+.alianzas-section { background: var(--white); }
+
+.mb-6 { margin-bottom: 4rem; }
+
+/* Wrapper con flechas */
+.logos-carousel-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Flechas */
+.logos-arrow {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--gray-mid);
+  background: var(--white);
+  color: var(--gray-text);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+.logos-arrow:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--white);
+  box-shadow: 0 4px 16px rgba(21,155,168,.3);
+}
+.logos-arrow:disabled {
+  opacity: .25;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Contenedor con overflow oculto */
+.logos-track-outer {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Track deslizable */
+.logos-track {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  transition: transform .6s cubic-bezier(.4,0,.2,1);
+  will-change: transform;
+}
+
+/* Cada logo — sin recuadro, solo imagen */
+.logo-slide {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .5rem 1rem;
+}
+.logo-slide img {
+  max-height: 72px;
+  width: auto;
+  max-width: 180px;
+  object-fit: contain;
+  filter: grayscale(20%);
+  opacity: .8;
+  transition: var(--transition);
+  display: block;
+}
+.logo-slide:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
+  transform: scale(1.05);
+}
+
+/* Divisor */
+.alianzas-divider {
+  width: 56px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--teal-light));
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+/* ── Responsive ── */
+@media (max-width: 767px) {
+  .logos-arrow { width: 34px; height: 34px; font-size: .85rem; }
+  .logos-track  { gap: 2rem; }
+  .logo-slide img { max-height: 52px; max-width: 130px; }
+}

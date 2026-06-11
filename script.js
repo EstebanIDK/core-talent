@@ -316,3 +316,83 @@ document.addEventListener('DOMContentLoaded', () => {
   console.log('%cCore Talent · Consultora', 'color:#159BA8;font-size:18px;font-weight:bold;');
   console.log('%cCapacitación y Desarrollo Organizacional · NOA', 'color:#062B5B;font-size:12px;');
 });
+
+
+/* ── Logos carousel (Alianzas, Convenios & Clientes) ─── */
+function initLogosCarousel({ trackId, prevId, nextId, visibleCount, autoplay }) {
+  const track  = document.getElementById(trackId);
+  const prev   = document.getElementById(prevId);
+  const next   = document.getElementById(nextId);
+  if (!track || !prev || !next) return;
+
+  const slides  = Array.from(track.querySelectorAll('.logo-slide'));
+  const total   = slides.length;
+  let   current = 0;
+  let   timer   = null;
+
+  function getVisible() {
+    if (window.innerWidth < 576) return 1;
+    if (window.innerWidth < 992) return 2;
+    return visibleCount;
+  }
+
+  function getSlideWidth() {
+    const trackOuter = track.parentElement;
+    const gap        = parseFloat(getComputedStyle(track).gap) || 48;
+    const vis        = getVisible();
+    return (trackOuter.offsetWidth - gap * (vis - 1)) / vis;
+  }
+
+  function setSlideSizes() {
+    const w = getSlideWidth();
+    slides.forEach(s => { s.style.width = w + 'px'; });
+  }
+
+  function update() {
+    const vis      = getVisible();
+    const maxIndex = Math.max(0, total - vis);
+    current        = Math.min(current, maxIndex);
+
+    const gap    = parseFloat(getComputedStyle(track).gap) || 48;
+    const w      = getSlideWidth();
+    const offset = current * (w + gap);
+    track.style.transform = `translateX(-${offset}px)`;
+
+    prev.disabled = current === 0;
+    next.disabled = current >= maxIndex;
+  }
+
+  function goNext() {
+    const vis      = getVisible();
+    const maxIndex = Math.max(0, total - vis);
+    current = current >= maxIndex ? 0 : current + 1;
+    update();
+  }
+
+  function startAutoplay() {
+    if (!autoplay) return;
+    timer = setInterval(goNext, autoplay);
+  }
+
+  function stopAutoplay() {
+    if (timer) { clearInterval(timer); timer = null; }
+  }
+
+  prev.addEventListener('click', () => { stopAutoplay(); current = Math.max(0, current - 1); update(); startAutoplay(); });
+  next.addEventListener('click', () => { stopAutoplay(); goNext(); startAutoplay(); });
+
+  // Pausar al hover
+  track.parentElement.addEventListener('mouseenter', stopAutoplay);
+  track.parentElement.addEventListener('mouseleave', startAutoplay);
+
+  window.addEventListener('resize', () => { setSlideSizes(); update(); });
+
+  setSlideSizes();
+  update();
+  startAutoplay();
+}
+
+// Inicializar los 3 carruseles — autoplay cada 3 segundos
+initLogosCarousel({ trackId: 'alianzasTrack',  prevId: 'alianzasPrev',  nextId: 'alianzasNext',  visibleCount: 3, autoplay: 3000 });
+initLogosCarousel({ trackId: 'conveniosTrack', prevId: 'conveniosPrev', nextId: 'conveniosNext', visibleCount: 3, autoplay: 3500 });
+initLogosCarousel({ trackId: 'clientesTrack',  prevId: 'clientesPrev',  nextId: 'clientesNext',  visibleCount: 3, autoplay: 4000 });
